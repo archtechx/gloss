@@ -30,7 +30,7 @@ class GlossTranslator extends Translator
     {
         if ($condition === null) {
             $condition = fn () => true;
-        } elseif (!is_callable($condition)) {
+        } elseif (! is_callable($condition)) {
             $condition = fn ($data) => array_intersect_assoc($data, $condition) !== [];
         }
 
@@ -72,7 +72,7 @@ class GlossTranslator extends Translator
     public function values(array $values, $condition = null)
     {
         foreach ($values as $key => $value) {
-            /** @var string $key */
+            /* @var string $key */
             $this->value($key, $value, $condition);
         }
     }
