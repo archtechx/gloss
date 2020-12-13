@@ -211,7 +211,12 @@ class GlossTest extends TestCase
         ]));
 
         $this->assertSame('There are no apples', gloss()->choice('test.apples', 0));
-        $this->assertSame('There are <span class="font-medium">2</span> apples', gloss()->choice('test.apples', 2));
+        $this->assertSame('There are <span class="font-medium">5</span> apples', gloss()->choice('test.apples', 5));
+
+        gloss()->setLocale('cs');
+
+        $this->assertSame('Není tam žádné jablko', gloss()->choice('test.apples', 0));
+        $this->assertSame('Je tam <span class="font-medium">5</span> jablek', gloss()->choice('test.apples', 5));
     }
 
     protected function addMessage(string $key, string $value, string $locale = 'en', string $group = 'test', string $namespace = null): void
