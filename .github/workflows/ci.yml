@@ -5,6 +5,9 @@ env:
   LEAN_MYSQL_PORT: 3307
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+matrix:
+  laravel: [6, 8]
+
 on:
   push:
   pull_request:
@@ -18,7 +21,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Install composer dependencies
-      run: composer install
+      run: composer require "laravel/framework:^{{matrix.laravel}}.0.0"
     - name: Run tests
       run: vendor/bin/phpunit
 
