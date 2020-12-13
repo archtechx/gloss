@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Lean\Gloss;
 
-use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\ServiceProvider;
 
 class GlossServiceProvider extends ServiceProvider
