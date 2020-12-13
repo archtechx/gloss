@@ -89,6 +89,15 @@ class GlossTranslator extends Translator
         $this->extensions[$shortKey][] = $value;
     }
 
+    /**
+     * Get a translation string.
+     *
+     * @param string $key
+     * @param array $replace
+     * @param string|null $locale
+     * @param bool $fallback
+     * @return string
+     */
     public function get($key, array $replace = [], $locale = null, $fallback = true)
     {
         if (array_key_exists($key, $this->extensions)) {
@@ -118,7 +127,16 @@ class GlossTranslator extends Translator
         return $this->getWithoutExtensions($key, $replace, $locale, $fallback);
     }
 
-    protected function getWithoutExtensions($key, $replace = [], $locale = null, $fallback = true)
+    /**
+     * Get a translation string and skip extensions.
+     *
+     * @param string $key
+     * @param array $replace
+     * @param string|null $locale
+     * @param bool $fallback
+     * @return string
+     */
+    protected function getWithoutExtensions(string $key, $replace = [], $locale = null, $fallback = true)
     {
         return $this->getKeyOverride($key, $replace)
             ?? $this->getValueOverride($key, $replace)

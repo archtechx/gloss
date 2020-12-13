@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Facade;
  * @method static ?string get($key, $replace = [], $locale = null) Get a translation string.
  * @method static ?string choice($key, $replace = [], $locale = null) Get a translation according to an integer value.
  * @method static void extend(string $shortKey, callable(string, callable): string $value) Extend a translation string.
+ *
+ * @see \Lean\Gloss\GlossTranslator
  */
 class Gloss extends Facade
 {

@@ -29,9 +29,5 @@ parameters:
             message: '#of function str_replace expects#'
             paths:
                 - src/GlossTranslator.php
-        -
-            message: '#should return Lean\\Gloss\\GlossTranslator\|string\|void\|null but returns array\|string#'
-            paths:
-                - src/helpers.php
 
     checkMissingIterableValueType: false
