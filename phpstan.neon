@@ -1,0 +1,37 @@
+includes:
+    - ./vendor/nunomaduro/larastan/extension.neon
+
+parameters:
+    paths:
+        - src
+        - tests
+
+    level: 8
+
+    universalObjectCratesClasses:
+        - Illuminate\Routing\Route
+
+    ignoreErrors:
+        -
+            message: '#has no return typehint specified#'
+            paths:
+                - tests/*
+                - src/GlossTranslator.php
+        -
+            message: '#Cannot call method (.*?) on Lean\\Gloss\\GlossTranslator\|#'
+            paths:
+                - tests/*
+        -
+            message: '#with no typehint specified#'
+            paths:
+                - src/GlossTranslator.php
+        -
+            message: '#of function str_replace expects#'
+            paths:
+                - src/GlossTranslator.php
+        -
+            message: '#should return Lean\\Gloss\\GlossTranslator\|string\|void\|null but returns array\|string#'
+            paths:
+                - src/helpers.php
+
+    checkMissingIterableValueType: false

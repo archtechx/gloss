@@ -1,0 +1,27 @@
+{
+    "name": "leanadmin/gloss",
+    "description": "Brilliant localization for Laravel",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Lean\\Gloss\\": "src"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Lean\\Gloss\\Tests\\": "tests"
+        }
+    },
+    "require": {
+        "illuminate/translation": "^8.18"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^6.4.0",
+        "orchestra/testbench-core": "6.7.0",
+        "phpunit/phpunit": "^9.5",
+        "nunomaduro/larastan": "^0.6.11"
+    }
+}
