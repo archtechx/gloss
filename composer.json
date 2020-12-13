@@ -23,5 +23,15 @@
         "orchestra/testbench-core": "6.7.0",
         "phpunit/phpunit": "^9.5",
         "nunomaduro/larastan": "^0.6.11"
+    },
+"extra": {
+    "laravel": {
+        "providers": [
+            "Lean\\Gloss\\GlossServiceProviders"
+        ],
+        "aliases": {
+            "Gloss": "Lean\\Gloss\\Gloss"
+        }
     }
+}
 }

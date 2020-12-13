@@ -5,9 +5,6 @@ env:
   LEAN_MYSQL_PORT: 3307
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-matrix:
-  laravel: [6, 8]
-
 on:
   push:
   pull_request:
@@ -15,6 +12,10 @@ on:
 
 jobs:
   phpunit:
+    strategy:
+      matrix:
+        laravel: [6, 8]
+
     name: Tests (PHPUnit)
     runs-on: ubuntu-latest
 
