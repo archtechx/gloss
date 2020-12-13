@@ -291,6 +291,30 @@ class GlossTest extends TestCase
         $this->assertSame('Edit Bar', Gloss::get('test.resource.edit', ['resource' => 'bar']));
     }
 
+    /** @test */
+    public function multiple_overrides_can_exist_for_each_key_and_value()
+    {
+        $this->addMessages('en', 'test', [
+            'abc' => 'Abc',
+            'foo' => 'Foo',
+            'bar' => 'Bar',
+        ]);
+
+        gloss()->key('test.abc', 'test.foo', ['resource' => 'foo']);
+        gloss()->key('test.abc', 'test.bar', ['resource' => 'bar']);
+
+        $this->assertSame('Abc', gloss('test.abc', ['resource' => 'anything']));
+        $this->assertSame('Foo', gloss('test.abc', ['resource' => 'foo']));
+        $this->assertSame('Bar', gloss('test.abc', ['resource' => 'bar']));
+
+        gloss()->key('test.abc', 'XXX', ['resource' => 'x']);
+        gloss()->key('test.abc', 'YYY', ['resource' => 'y']);
+
+        $this->assertSame('Abc', gloss('test.abc', ['resource' => 'anything']));
+        $this->assertSame('XXX', gloss('test.abc', ['resource' => 'x']));
+        $this->assertSame('YYY', gloss('test.abc', ['resource' => 'y']));
+    }
+
     protected function addMessage(string $key, string $value, string $locale = 'en', string $group = 'test', string $namespace = null): void
     {
         $this->addMessages($locale, $group, [$key => $value], $namespace);

@@ -56,7 +56,7 @@ class GlossTranslator extends Translator
             $condition = fn ($data) => array_intersect_assoc($data, $condition) !== [];
         }
 
-        $this->valueOverrides[$shortKey] = [
+        $this->valueOverrides[$shortKey][] = [
             'condition' => $condition,
             'value' => $value,
         ];
@@ -71,8 +71,8 @@ class GlossTranslator extends Translator
      */
     public function values(array $values, $condition = null)
     {
+        /** @var string $key */
         foreach ($values as $key => $value) {
-            /* @var string $key */
             $this->value($key, $value, $condition);
         }
     }
@@ -140,8 +140,12 @@ class GlossTranslator extends Translator
 
     protected function getValueOverride(string $key, array $data)
     {
-        if (isset($this->valueOverrides[$key]) && $this->valueOverrides[$key]['condition']($data)) {
-            return $this->valueOverrides[$key]['value'];
+        if (isset($this->valueOverrides[$key])) {
+            foreach ($this->valueOverrides[$key] as $override) {
+                if ($override['condition']($data)) {
+                    return $override['value'];
+                }
+            }
         }
 
         return null;
