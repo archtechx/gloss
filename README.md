@@ -130,7 +130,7 @@ Gloss::extend('foo.pagination', fn ($value, $replace) => $replace($value, [
     ':total' => '<span class="font-medium">:total</span>',
 ]));
 
-Gloss::get('test.pagination', ['start' => 10, 'end' => 20, 'total' => 50])
+Gloss::get('foo.pagination', ['start' => 10, 'end' => 20, 'total' => 50])
 // Showing <span class="font-medium">10</span> to <span class="font-medium">20</span> of <span class="font-medium">50</span> results
 ```
 

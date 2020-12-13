@@ -9,20 +9,22 @@ if (! function_exists('gloss')) {
      * Resolve a translation string or Gloss instance.
      *
      * @param string|array|null $key
-     * @param array $replace
+     * @param array|callable|null $replace
      * @param string|null $locale
      * @return void|string|null|\Lean\Gloss\GlossTranslator
      */
-    function gloss($key = null, array $replace = [], string $locale = null)
+    function gloss($key = null, $replace = null, string $locale = null)
     {
         if (is_array($key)) {
-            Gloss::values($key);
+            [$overrides, $condition] = [$key, $replace];
+
+            Gloss::values($overrides, $condition);
 
             return;
         }
 
         if (is_string($key)) {
-            return Gloss::get($key, $replace, $locale);
+            return Gloss::get($key, (array) $replace, $locale);
         }
 
         return Gloss::getFacadeRoot();

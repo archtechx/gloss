@@ -3,8 +3,8 @@
 namespace Lean\Gloss\Tests;
 
 use Lean\Gloss\Gloss;
-use Lean\Gloss\GlossServiceProvider;
 use Lean\Gloss\GlossTranslator;
+use Illuminate\Support\Str;
 
 class GlossTest extends TestCase
 {
@@ -217,6 +217,78 @@ class GlossTest extends TestCase
 
         $this->assertSame('Není tam žádné jablko', gloss()->choice('test.apples', 0));
         $this->assertSame('Je tam <span class="font-medium">5</span> jablek', gloss()->choice('test.apples', 5));
+    }
+
+    /** @test */
+    public function key_overrides_can_have_conditions()
+    {
+        $this->addMessages('en', 'test', [
+            'resource.create' => 'Create :Resource',
+            'foo.create' => 'Foo/Create',
+        ]);
+
+        Gloss::key('test.resource.create', 'test.foo.create', ['resource' => 'foo']);
+
+        $this->assertSame('Foo/Create', Gloss::get('test.resource.create', ['resource' => 'foo']));
+        $this->assertSame('Create Bar', Gloss::get('test.resource.create', ['resource' => 'bar']));
+    }
+
+    /** @test */
+    public function value_overrides_can_have_conditions()
+    {
+        $this->addMessages('en', 'test', [
+            'resource.create' => 'Create :Resource',
+        ]);
+
+        Gloss::value('test.resource.create', 'Bar/Create', ['resource' => 'bar']);
+
+        $this->assertSame('Create Foo', Gloss::get('test.resource.create', ['resource' => 'foo']));
+        $this->assertSame('Bar/Create', Gloss::get('test.resource.create', ['resource' => 'bar']));
+    }
+
+    /** @test */
+    public function bulk_value_overrides_can_have_conditions()
+    {
+        $this->addMessages('en', 'test', [
+            'resource.create' => 'Create :Resource',
+            'resource.edit' => 'Edit :Resource',
+        ]);
+
+        gloss([
+            'test.resource.create' => 'Foo/Create',
+            'test.resource.edit' => 'Foo/Edit',
+        ], ['resource' => 'foo']);
+
+        $this->assertSame('Foo/Create', Gloss::get('test.resource.create', ['resource' => 'foo']));
+        $this->assertSame('Foo/Edit', Gloss::get('test.resource.edit', ['resource' => 'foo']));
+        $this->assertSame('Create Bar', Gloss::get('test.resource.create', ['resource' => 'bar']));
+        $this->assertSame('Edit Bar', Gloss::get('test.resource.edit', ['resource' => 'bar']));
+    }
+
+    /** @test */
+    public function custom_condition_for_key_and_value_overrides_can_be_used()
+    {
+        $this->addMessages('en', 'test', [
+            'resource.index' => 'Index of :Resource',
+            'resource.create' => 'Create :Resource',
+            'resource.show' => 'Detail of :Resource',
+            'resource.edit' => 'Edit :Resource',
+        ]);
+
+        gloss([
+            'test.resource.index' => 'custom',
+            'test.resource.create' => 'custom',
+        ], fn ($data) => Str::startsWith($data['resource'], 'f'));
+
+        $this->assertSame('custom', Gloss::get('test.resource.index', ['resource' => 'foo']));
+        $this->assertSame('custom', Gloss::get('test.resource.create', ['resource' => 'foo']));
+        $this->assertSame('Detail of Foo', Gloss::get('test.resource.show', ['resource' => 'foo']));
+        $this->assertSame('Edit Foo', Gloss::get('test.resource.edit', ['resource' => 'foo']));
+
+        $this->assertSame('Index of Bar', Gloss::get('test.resource.index', ['resource' => 'bar']));
+        $this->assertSame('Create Bar', Gloss::get('test.resource.create', ['resource' => 'bar']));
+        $this->assertSame('Detail of Bar', Gloss::get('test.resource.show', ['resource' => 'bar']));
+        $this->assertSame('Edit Bar', Gloss::get('test.resource.edit', ['resource' => 'bar']));
     }
 
     protected function addMessage(string $key, string $value, string $locale = 'en', string $group = 'test', string $namespace = null): void
