@@ -49,6 +49,8 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.0'
+        env:
+          update: true
       - name: Run php-cs-fixer
         run: $HOME/.composer/vendor/bin/php-cs-fixer fix --config=.php_cs.php
       - name: Commit changes from php-cs-fixer
