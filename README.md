@@ -55,7 +55,7 @@ Gloss::choice('foo.apple', ['count' => 2]); // There are many apples
 
 However, unlike the standard localization, it lets you make changes to these strings on the fly:
 
-### Value aliases
+### Value overrides
 
 Imagine that you're editing the `Order` resource in an admin panel. Your resource's singular label is `Objednávka`, which is Czech for `Order`.
 
@@ -87,7 +87,45 @@ If you're using Lean, this is taken care of for you. You can simply define entir
 
 Also note that the example above mentions resources, but that's just how Lean is implemented. Gloss will work with any setup.
 
-### Key aliases
+You can also set multiple value overrides in a single call:
+
+```php
+Gloss::values([
+    'resource.create' => 'Vytvořit objednávku',
+    'resource.edit' => 'Upravit objednávku',
+]);
+```
+
+You may also use the `gloss()` helper for this. Simply pass the array as the first argument.
+
+### Scoping overrides
+
+Sometimes you may want to scope your overrides. For example, rather than overriding all `resource.create` with `Vytvořit objednávku`, you may want to only do that if the `resource` parameter is `order`.
+
+To do this, pass a third argument:
+
+```php
+Gloss::value('resource.create', 'Vytvořit objednávku', ['resource' => 'order');
+```
+
+The condition can also be passed to `values()`:
+```php
+Gloss::values([
+    'resource.create' => 'Vytvořit objednávku',
+    'resource.edit' => 'Upravit objednávku',
+], ['resource' => 'order']);
+```
+
+Or to the `gloss()` helper when setting overrides:
+
+```php
+gloss([
+    'resource.create' => 'Vytvořit objednávku',
+    'resource.edit' => 'Upravit objednávku',
+], ['resource' => 'order']);
+```
+
+### Key overrides
 
 To build up on the example above, let's say our admin panel uses multiple languages. So replacing the language string with a translation that's part of the code isn't feasible.
 
@@ -104,6 +142,11 @@ This is equivalent to fetching the value using a translation helper.
 ```php
 Gloss::value('resource.create', gloss('orders.create'));
 Gloss::key('resource.create', 'orders.create');
+```
+
+As with `value()`, you can pass conditions:
+```php
+Gloss::key('resource.create', 'orders.create', ['resource' => 'order');
 ```
 
 ### Extending values
