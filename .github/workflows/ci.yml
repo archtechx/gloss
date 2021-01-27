@@ -45,6 +45,10 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install php-cs-fixer
         run: composer global require friendsofphp/php-cs-fixer
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
       - name: Run php-cs-fixer
         run: $HOME/.composer/vendor/bin/php-cs-fixer fix --config=.php_cs.php
       - name: Commit changes from php-cs-fixer
