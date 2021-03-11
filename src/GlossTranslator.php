@@ -148,7 +148,7 @@ class GlossTranslator extends Translator
         if (isset($this->keyOverrides[$key])) {
             foreach ($this->keyOverrides[$key] as $override) {
                 if ($override['condition']($data)) {
-                    return $this->get($override['value']);
+                    return $this->get($override['value'], $data);
                 }
             }
         }
@@ -161,7 +161,7 @@ class GlossTranslator extends Translator
         if (isset($this->valueOverrides[$key])) {
             foreach ($this->valueOverrides[$key] as $override) {
                 if ($override['condition']($data)) {
-                    return $override['value'];
+                    return $this->get($override['value'], $data);
                 }
             }
         }

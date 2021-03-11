@@ -91,7 +91,7 @@ class GlossTest extends TestCase
         Gloss::value('Create :resource', 'Create :Resource');
 
         $this->assertNotSame('not called', Gloss::get('Create :resource', ['resource' => 'foo']));
-        $this->assertSame('Create :Resource', Gloss::get('Create :resource', ['resource' => 'foo']));
+        $this->assertSame('Create Foo', Gloss::get('Create :resource', ['resource' => 'foo']));
     }
 
     /** @test */
