@@ -240,7 +240,7 @@ class GlossTranslator extends Translator
 
     protected function makeReplacements($line, array $replace)
     {
-        if (is_callable($line) && !is_string($line)) {
+        if (is_callable($line) && ! is_string($line)) {
             $line = app()->call($line, $replace);
         }
 
