@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Lean\Gloss;
 
 use Countable;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Arr;
 use Illuminate\Translation\Translator;
 
@@ -229,7 +230,11 @@ class GlossTranslator extends Translator
             return $this->makeReplacements($line, $replace);
         } elseif (is_array($line) && count($line) > 0) {
             foreach ($line as $key => $value) {
-                $line[$key] = $this->makeReplacements($value, $replace);
+                if (! is_callable($value)) {
+                    $value = $this->makeReplacements($value, $replace);
+                }
+
+                $line[$key] = $value;
             }
 
             return $line;
@@ -241,7 +246,11 @@ class GlossTranslator extends Translator
     protected function makeReplacements($line, array $replace)
     {
         if (is_callable($line) && ! is_string($line)) {
-            $line = app()->call($line, $replace);
+            try {
+                $line = app()->call($line, $replace);
+            } catch (BindingResolutionException $exception) {
+                // We keep it a Closure if we can't safely call it
+            }
         }
 
         return parent::makeReplacements($line, $replace);
