@@ -225,13 +225,8 @@ class GlossTranslator extends Translator
 
         $line = Arr::get($this->loaded[$namespace][$group][$locale], $item);
 
-        if (is_string($line)) {
+        if (is_string($line) || is_callable($line)) { // Changed
             return $this->makeReplacements($line, $replace);
-        } elseif (is_callable($line)) {
-            return $this->makeReplacements(
-                app()->call($line, $replace),
-                $replace
-            );
         } elseif (is_array($line) && count($line) > 0) {
             foreach ($line as $key => $value) {
                 $line[$key] = $this->makeReplacements($value, $replace);
@@ -241,5 +236,14 @@ class GlossTranslator extends Translator
         }
 
         return null;
+    }
+
+    protected function makeReplacements($line, array $replace)
+    {
+        if (is_callable($line) && !is_string($line)) {
+            $line = app()->call($line, $replace);
+        }
+
+        return parent::makeReplacements($line, $replace);
     }
 }
