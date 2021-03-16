@@ -228,7 +228,10 @@ class GlossTranslator extends Translator
         if (is_string($line)) {
             return $this->makeReplacements($line, $replace);
         } elseif (is_callable($line)) {
-            return app()->call($line, $replace);
+            return $this->makeReplacements(
+                app()->call($line, $replace),
+                $replace
+            );
         } elseif (is_array($line) && count($line) > 0) {
             foreach ($line as $key => $value) {
                 $line[$key] = $this->makeReplacements($value, $replace);

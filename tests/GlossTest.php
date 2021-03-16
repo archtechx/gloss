@@ -321,10 +321,13 @@ class GlossTest extends TestCase
         $this->addMessages('en', 'test', [
             'foo' => fn () => 'bar',
             'abc' => fn ($resource, $title) => Str::upper($resource) . ' ' . Str::lower($title),
+            'def' => fn ($resource) => "Edit {$resource} :title",
         ]);
 
         $this->assertSame('bar', gloss('test.foo'));
         $this->assertSame('PRODUCT macbook pro', gloss('test.abc', ['resource' => 'product', 'title' => 'MacBook Pro']));
+        $this->assertSame('Edit product :title', gloss('test.def', ['resource' => 'product']));
+        $this->assertSame('Edit product foo', gloss('test.def', ['resource' => 'product', 'title' => 'foo']));
     }
 
     protected function addMessage(string $key, string $value, string $locale = 'en', string $group = 'test', string $namespace = null): void
