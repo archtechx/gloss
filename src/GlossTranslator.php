@@ -243,6 +243,11 @@ class GlossTranslator extends Translator
         return null;
     }
 
+    /**
+     * @param string|callable $line
+     * @param array $replace
+     * @return string
+     */
     protected function makeReplacements($line, array $replace)
     {
         if (is_callable($line) && ! is_string($line)) {
