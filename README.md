@@ -210,3 +210,30 @@ fn ($string, $replace) => $replace($string, [
 
 // So eloquent!
 ```
+
+### Callable translation strings
+
+Gloss also adds support for callable translation strings.
+
+Those can be useful when you have some code for dealing with things like inflection.
+
+For example, consider these three language strings:
+```php
+'index' => ':resources',
+'create' => 'Create :resource',
+'edit' => 'Edit :resource :title',
+'delete' => 'Delete :resource :title',
+```
+
+In many languages that have declension (inflection of nouns, read more about the complexities of localization on [in our documentation](https://lean-admin.dev/docs/localization)), the form of `:Resource` will be the same for `create`, `edit`, and `delete`.
+
+It would be painful to translate each string manually for no reason. A better solution is to use intelligent inflection logic **as the default, while still keeping the option to manually change specific strings if needed**.
+
+```php
+'index' => fn ($resource) => nominative($resource, 'plural'),
+'create' => fn ($resource) => 'Vytvořit ' . oblique($resource, 'singular'),
+'edit' => fn ($resource, $title) => 'Upravit ' . oblique($resource, 'singular') . $title,
+'delete' => fn ($resource, $title) => 'Smazat ' . oblique($resource, 'singular') . $title,
+```
+
+You could have logic like this (with your own helpers) for the default values, and only use the overrides when some words are have irregular grammar rules and need custom values.

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Lean\Gloss;
 
 use Countable;
+use Illuminate\Support\Arr;
 use Illuminate\Translation\Translator;
 
 class GlossTranslator extends Translator
@@ -216,5 +217,24 @@ class GlossTranslator extends Translator
         return $this->makeReplacements(
             $this->getSelector()->choose($line, $number, $locale), $replace
         );
+    }
+
+    protected function getLine($namespace, $group, $locale, $item, array $replace)
+    {
+        $this->load($namespace, $group, $locale);
+
+        $line = Arr::get($this->loaded[$namespace][$group][$locale], $item);
+
+        if (is_string($line)) {
+            return $this->makeReplacements($line, $replace);
+        } else if (is_callable($line)) {
+            return app()->call($line, $replace);
+        } elseif (is_array($line) && count($line) > 0) {
+            foreach ($line as $key => $value) {
+                $line[$key] = $this->makeReplacements($value, $replace);
+            }
+
+            return $line;
+        }
     }
 }

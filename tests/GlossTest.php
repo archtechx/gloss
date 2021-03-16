@@ -315,6 +315,18 @@ class GlossTest extends TestCase
         $this->assertSame('YYY', gloss('test.abc', ['resource' => 'y']));
     }
 
+    /** @test */
+    public function closures_can_be_used_in_translation_strings()
+    {
+        $this->addMessages('en', 'test', [
+            'foo' => fn () => 'bar',
+            'abc' => fn ($resource, $title) => Str::upper($resource) . ' ' . Str::lower($title),
+        ]);
+
+        $this->assertSame('bar', gloss('test.foo'));
+        $this->assertSame('PRODUCT macbook pro', gloss('test.abc', ['resource' => 'product', 'title' => 'MacBook Pro']));
+    }
+
     protected function addMessage(string $key, string $value, string $locale = 'en', string $group = 'test', string $namespace = null): void
     {
         $this->addMessages($locale, $group, [$key => $value], $namespace);
