@@ -236,5 +236,7 @@ class GlossTranslator extends Translator
 
             return $line;
         }
+
+        return null;
     }
 }
