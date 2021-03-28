@@ -77,7 +77,7 @@ Firstly, it should be Objednávk**u**, because the suffix changes with context. 
 So we want to specify a **complete override** of that language string whenever we're in the `Order` resource context.
 
 To do this, simply call:
-```
+```php
 Gloss::value('resource.create', 'Vytvořit objednávku');
 ```
 
