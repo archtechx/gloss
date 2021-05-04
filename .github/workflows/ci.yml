@@ -43,12 +43,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.0'
-        env:
-          update: true
       - name: Install php-cs-fixer
         run: composer global require friendsofphp/php-cs-fixer
       - name: Run php-cs-fixer

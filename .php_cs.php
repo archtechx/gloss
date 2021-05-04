@@ -7,10 +7,14 @@ $rules = [
     'array_syntax' => ['syntax' => 'short'],
     'binary_operator_spaces' => [
         'default' => 'single_space',
-        'operators' => ['=>' => null]
+        'operators' => [
+            '=>' => null,
+            '|' => 'no_space',
+        ]
     ],
     'blank_line_after_namespace' => true,
     'blank_line_after_opening_tag' => true,
+    'no_superfluous_phpdoc_tags' => true,
     'blank_line_before_statement' => [
         'statements' => ['return']
     ],
@@ -94,7 +98,7 @@ $rules = [
     'phpdoc_scalar' => true,
     'phpdoc_single_line_var_spacing' => true,
     'phpdoc_summary' => true,
-    'phpdoc_to_comment' => true,
+    'phpdoc_to_comment' => false,
     'phpdoc_trim' => true,
     'phpdoc_types' => true,
     'phpdoc_var_without_name' => true,
@@ -120,9 +124,9 @@ $rules = [
     'trailing_comma_in_multiline_array' => true,
     'trim_array_spaces' => true,
     'unary_operator_spaces' => true,
-    'visibility_required' => [
-        'elements' => ['method', 'property']
-    ],
+    // 'visibility_required' => [
+    //     'elements' => ['method', 'property']
+    // ],
     'whitespace_after_comma_in_array' => true,
 ];
 
