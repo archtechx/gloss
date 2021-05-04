@@ -229,18 +229,25 @@ class GlossTranslator extends Translator
         if (is_string($line) || is_callable($line)) { // Changed
             return $this->makeReplacements($line, $replace);
         } elseif (is_array($line) && count($line) > 0) {
-            foreach ($line as $key => $value) {
-                if (! is_callable($value)) {
-                    $value = $this->makeReplacements($value, $replace);
-                }
-
-                $line[$key] = $value;
-            }
-
-            return $line;
+            return $this->makeReplacementsInArray($line, $replace);
         }
 
         return null;
+    }
+
+    protected function makeReplacementsInArray(array $lines, array $replace): array
+    {
+        foreach ($lines as $key => $value) {
+            if (is_array($value)) {
+                $value = $this->makeReplacementsInArray($value, $replace);
+            } else {
+                $value = $this->makeReplacements($value, $replace);
+            }
+
+            $lines[$key] = $value;
+        }
+
+        return $lines;
     }
 
     /**
