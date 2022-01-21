@@ -16,10 +16,10 @@
         }
     },
     "require": {
-        "illuminate/translation": "^8.0||^6.0"
+        "illuminate/translation": "^9.0||^8.0||^6.0"
     },
     "require-dev": {
-        "orchestra/testbench": "^6.0||^4.0",
+        "orchestra/testbench": "^9.0||^6.0||^4.0",
         "phpunit/phpunit": "^9.5",
         "nunomaduro/larastan": "^0.6.11"
     },

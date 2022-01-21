@@ -13,9 +13,10 @@ on:
 
 jobs:
   phpunit:
+    name: Tests (Pest) L${{ matrix.laravel }}
     strategy:
       matrix:
-        laravel: [6, 8]
+        laravel: [6, 8, 9]
 
     name: Tests (PHPUnit)
     runs-on: ubuntu-latest
@@ -23,7 +24,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Install composer dependencies
-      run: composer require "laravel/framework:^${{matrix.laravel}}.0.0"
+      run: composer require "laravel/framework:^${{matrix.laravel}}.0"
     - name: Run tests
       run: vendor/bin/phpunit
 
