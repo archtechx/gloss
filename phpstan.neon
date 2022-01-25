@@ -25,9 +25,5 @@ parameters:
             message: '#with no typehint specified#'
             paths:
                 - src/GlossTranslator.php
-        -
-            message: '#of function str_replace expects#'
-            paths:
-                - src/GlossTranslator.php
 
     checkMissingIterableValueType: false
