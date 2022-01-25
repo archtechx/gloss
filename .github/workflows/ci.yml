@@ -13,12 +13,11 @@ on:
 
 jobs:
   phpunit:
-    name: Tests (Pest) L${{ matrix.laravel }}
+    name: Tests (PHPUnit) L${{ matrix.laravel }}
     strategy:
       matrix:
         laravel: [6, 8, 9]
 
-    name: Tests (PHPUnit)
     runs-on: ubuntu-latest
 
     steps:
