@@ -1,5 +1,5 @@
 .phpunit.result.cache
 composer.lock
 vendor/
-.php_cs.cache
+.php-cs-fixer.cache
 .vscode/

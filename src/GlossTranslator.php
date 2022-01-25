@@ -23,8 +23,6 @@ class GlossTranslator extends Translator
     /**
      * Register an override that returns a different key name.
      *
-     * @param string $shortKey
-     * @param string $newKey
      * @param array|null|callable $condition
      * @return void
      */
@@ -45,8 +43,6 @@ class GlossTranslator extends Translator
     /**
      * Register an override that returns a value.
      *
-     * @param string $shortKey
-     * @param string $value
      * @param array|null|callable $condition
      * @return void
      */
@@ -67,7 +63,6 @@ class GlossTranslator extends Translator
     /**
      * Register multiple value overrides.
      *
-     * @param array $values
      * @param array|null|callable $condition
      * @return void
      */
@@ -82,8 +77,6 @@ class GlossTranslator extends Translator
     /**
      * Customize a translation string's value using a callback.
      *
-     * @param string $shortKey
-     * @param callable $value
      * @return void
      */
     public function extend(string $shortKey, callable $value)
@@ -95,7 +88,6 @@ class GlossTranslator extends Translator
      * Get a translation string.
      *
      * @param string $key
-     * @param array $replace
      * @param string|null $locale
      * @param bool $fallback
      * @return string
@@ -132,7 +124,6 @@ class GlossTranslator extends Translator
     /**
      * Get a translation string and skip extensions.
      *
-     * @param string $key
      * @param array $replace
      * @param string|null $locale
      * @param bool $fallback
@@ -203,7 +194,9 @@ class GlossTranslator extends Translator
     protected function choiceWithoutExtensions($key, $number, array $replace = [], $locale = null)
     {
         $line = $this->getWithoutExtensions(
-            $key, $replace, $locale = $this->localeForChoice($locale)
+            $key,
+            $replace,
+            $locale = $this->localeForChoice($locale)
         );
 
         // If the given "number" is actually an array or countable we will simply count the
@@ -216,7 +209,8 @@ class GlossTranslator extends Translator
         $replace['count'] = $number;
 
         return $this->makeReplacements(
-            $this->getSelector()->choose($line, $number, $locale), $replace
+            $this->getSelector()->choose($line, $number, $locale),
+            $replace
         );
     }
 
@@ -252,7 +246,6 @@ class GlossTranslator extends Translator
 
     /**
      * @param string|callable $line
-     * @param array $replace
      * @return string
      */
     protected function makeReplacements($line, array $replace)
