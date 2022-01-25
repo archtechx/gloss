@@ -13,7 +13,7 @@ parameters:
 
     ignoreErrors:
         -
-            message: '#has no return typehint specified#'
+            message: '#has no return type specified#'
             paths:
                 - tests/*
                 - src/GlossTranslator.php
@@ -22,7 +22,7 @@ parameters:
             paths:
                 - tests/*
         -
-            message: '#with no typehint specified#'
+            message: '#with no type specified#'
             paths:
                 - src/GlossTranslator.php
 
