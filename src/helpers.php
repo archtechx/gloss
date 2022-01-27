@@ -10,7 +10,6 @@ if (! function_exists('gloss')) {
      *
      * @param string|array|null $key
      * @param array|callable|null $replace
-     * @param string|null $locale
      * @return void|string|null|\Lean\Gloss\GlossTranslator
      */
     function gloss($key = null, $replace = null, string $locale = null)
@@ -36,8 +35,6 @@ if (! function_exists('___') && Gloss::$underscoreHelper) {
      * Resolve a translation string or Gloss instance.
      *
      * @param string|array|null $key
-     * @param array $replace
-     * @param string|null $locale
      * @return void|string|null|\Lean\Gloss\GlossTranslator
      */
     function ___($key = null, array $replace = [], string $locale = null)

@@ -13,19 +13,25 @@ on:
 
 jobs:
   phpunit:
+    name: Tests (PHPUnit) L${{ matrix.laravel }}
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        laravel: [6, 8]
-
-    name: Tests (PHPUnit)
-    runs-on: ubuntu-latest
+        laravel: [6, 8, 9]
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Install composer dependencies
-      run: composer require "laravel/framework:^${{matrix.laravel}}.0.0"
-    - name: Run tests
-      run: vendor/bin/phpunit
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
+
+      - name: Install dependencies
+        run: composer require "laravel/framework:^${{matrix.laravel}}.0"
+      - name: Run tests
+        run: vendor/bin/phpunit
 
   phpstan:
     name: Static analysis (PHPStan)
@@ -46,7 +52,7 @@ jobs:
       - name: Install php-cs-fixer
         run: composer global require friendsofphp/php-cs-fixer
       - name: Run php-cs-fixer
-        run: $HOME/.composer/vendor/bin/php-cs-fixer fix --config=.php_cs.php
+        run: $HOME/.composer/vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.php
       - name: Commit changes from php-cs-fixer
         uses: EndBug/add-and-commit@v5
         with:
