@@ -11,7 +11,8 @@ class TestCase extends \Orchestra\Testbench\TestCase
     {
         parent::setUp();
 
-        $this->app?->bind('translation.loader', GlossLoader::class);
+        // @phpstan-ignore-next-line
+        $this->app->bind('translation.loader', GlossLoader::class);
     }
 
     protected function getPackageProviders($app)
